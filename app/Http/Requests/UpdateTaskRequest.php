@@ -9,7 +9,7 @@ class UpdateTaskRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -19,8 +19,8 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'description' => ['required', 'string'],
-            'status' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
+            'status' => ['nullable', 'string'],
         ];
     }
 }
