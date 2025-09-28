@@ -1,5 +1,107 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
+
+## Разработка простого API для управления задачами (тестовое задание)
+
+### Как запустить
+
+1. Поднятие контейнеров и установка зависимостей (первый запуск):
+```
+git clone https://github.com/aveheader/laravel-api.git
+cd laravel-docker
+docker compose up -d --build
+docker compose exec php bash
+composer setup
+```
+
+2. Для последующих запусков:
+```
+docker compose up -d
+```
+
+3. Выполнение миграций (при необходимости):
+```
+docker compose exec php bash
+php artisan migrate
+```
+
+4. Управление пакетом Laravel IDE Helper (barryvdh/laravel-ide-helper):
+```
+docker compose exec php bash
+php artisan ide-helper:generate
+php artisan ide-helper:models -W
+```
+
+### Что реализовано
+Простое REST API для управления задачами на Laravel 12.
+
+API доступно по адресу: `http://localhost:8000/api`
+
+## 📚 API Endpoints
+
+### 1. Получить список задач
+**GET** `/api/tasks`
+
+Пример ответа:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "title": "Изучить Laravel",
+      "description": "Изучить основы фреймворка",
+      "status": "pending",
+      "created_at": "2025-09-27T10:00:00Z",
+      "updated_at": "2025-09-27T10:00:00Z"
+    }
+  ]
+}
+```
+
+### 2. Создать задачу
+**POST** `/api/tasks`
+
+Тело запроса:
+```json
+{
+  "title": "Новая задача",
+  "description": "Описание задачи",
+  "status": "pending"
+}
+```
+
+### 3. Получить задачу по ID
+**GET** `/api/tasks/{id}`
+
+### 4. Обновить задачу
+**PUT** `/api/tasks/{id}`
+
+### 5. Удалить задачу
+**DELETE** `/api/tasks/{id}`
+
+## 📝 Валидация
+
+- `title` - обязательное поле, строка, 3-255 символов
+- `description` - опциональное поле, строка, до 1000 символов
+- `status` - опциональное поле, одно из: `pending`, `in_progress`, `completed`
+
+## 🔒 Rate Limiting
+
+API ограничен 60 запросами в минуту на IP адрес.
+
+## 📊 Коды ответов
+
+- `200` - Успешный запрос
+- `201` - Ресурс создан
+- `422` - Ошибки валидации
+- `429` - Превышен лимит запросов
+- `500` - Внутренняя ошибка сервера
+
+### Дополнительная информация
+
+Docker окружение честно взято [отсюда](https://github.com/refactorian/laravel-docker).
+
 # Laravel Docker Starter Kit
 - Laravel v12.x
 - PHP v8.4.x
@@ -108,7 +210,7 @@
 - Format uncommitted changes according to Git
     - `vendor/bin/pint --dirty`
 - Inspect all files
-  - `vendor/bin/pint --test`
+    - `vendor/bin/pint --test`
 
 ### Rector
 - Dry Run
