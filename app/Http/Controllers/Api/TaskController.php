@@ -25,6 +25,7 @@ class TaskController extends Controller
     public function index(): JsonResponse
     {
         $tasks = Task::paginate(15);
+
         return response()->json([
             'success' => true,
             'data' => TaskResource::collection($tasks)
@@ -41,7 +42,11 @@ class TaskController extends Controller
     {
         $task = Task::create($request->validated());
 
-        return response()->json($task, 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Task created successfully',
+            'data' => new TaskResource($task)
+        ], 201);
     }
 
     /**
@@ -66,7 +71,11 @@ class TaskController extends Controller
     {
         $task->update($request->validated());
 
-        return response()->json($task, 200);
+        return response()->json([
+            'success' => true,
+            'message' => 'Task updated successfully',
+            'data' => new TaskResource($task)
+        ]);
     }
 
     /**
@@ -79,6 +88,9 @@ class TaskController extends Controller
     {
         $task->delete();
 
-        return response()->json(null, 204);
+        return response()->json([
+            'success' => true,
+            'message' => 'Task deleted successfully'
+        ], 204);
     }
 }
