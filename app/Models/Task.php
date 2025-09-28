@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\TaskFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -12,8 +14,8 @@ use Illuminate\Support\Carbon;
  * @property string $title
  * @property string|null $description
  * @property string $status
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @method static Builder<static>|Task newModelQuery()
  * @method static Builder<static>|Task newQuery()
  * @method static Builder<static>|Task query()
@@ -23,10 +25,12 @@ use Illuminate\Support\Carbon;
  * @method static Builder<static>|Task whereStatus($value)
  * @method static Builder<static>|Task whereTitle($value)
  * @method static Builder<static>|Task whereUpdatedAt($value)
+ * @method static TaskFactory factory($count = null, $state = [])
  * @mixin Eloquent
  */
 class Task extends Model
 {
+    use HasFactory;
     /**
      * Поля, которые можно массово назначать
      *
