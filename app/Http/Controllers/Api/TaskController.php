@@ -8,7 +8,6 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * Task API Controller
@@ -19,78 +18,49 @@ class TaskController extends Controller
 {
     /**
      * Получить список всех задач
-     *
-     * @return JsonResponse
      */
     public function index(): JsonResponse
     {
-        $tasks = Task::paginate(15);
+        $tasks = Task::all();
 
-        return response()->json([
-            'success' => true,
-            'data' => TaskResource::collection($tasks)
-            ]);
+        return response()->json(TaskResource::collection($tasks));
     }
 
     /**
      * Создать новую задачу
-     *
-     * @param StoreTaskRequest $request
-     * @return JsonResponse
      */
     public function store(StoreTaskRequest $request): JsonResponse
     {
         $task = Task::create($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Task created successfully',
-            'data' => new TaskResource($task)
-        ], 201);
+        return response()->json(new TaskResource($task), 201);
     }
 
     /**
      * Получить конкретную задачу по ID
-     *
-     * @param Task $task
-     * @return JsonResource
      */
-    public function show(Task $task): JsonResource
+    public function show(Task $task): JsonResponse
     {
-        return new TaskResource($task);
+        return response()->json(new TaskResource($task));
     }
 
     /**
      * Обновить существующую задачу
-     *
-     * @param UpdateTaskRequest $request
-     * @param Task $task
-     * @return JsonResponse
      */
     public function update(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         $task->update($request->validated());
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Task updated successfully',
-            'data' => new TaskResource($task)
-        ]);
+        return response()->json(new TaskResource($task));
     }
 
     /**
      * Удалить задачу
-     *
-     * @param Task $task
-     * @return JsonResponse
      */
     public function destroy(Task $task): JsonResponse
     {
         $task->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Task deleted successfully'
-        ], 204);
+        return response()->json(null, 204);
     }
 }
