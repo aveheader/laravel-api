@@ -16,7 +16,6 @@ docker compose exec php bash -c "composer setup"
 docker compose up -d
 ```
 3. Запуск тестов:
-# Запуск через Docker
 ```
 docker compose exec php php artisan test
 ```
