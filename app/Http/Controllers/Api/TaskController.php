@@ -24,18 +24,11 @@ class TaskController extends Controller
      */
     public function index(): JsonResponse
     {
-        try {
-            $tasks = Task::paginate(15);
-            return response()->json([
-                'success' => true,
-                'data' => TaskResource::collection($tasks)
+        $tasks = Task::paginate(15);
+        return response()->json([
+            'success' => true,
+            'data' => TaskResource::collection($tasks)
             ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error retrieving tasks'
-            ], 500);
-        }
     }
 
     /**
