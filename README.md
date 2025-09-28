@@ -15,6 +15,11 @@ docker compose exec php bash -c "composer setup"
 ```
 docker compose up -d
 ```
+3. Запуск тестов:
+# Запуск через Docker
+```
+docker compose exec php php artisan test
+```
 
 ### Что реализовано
 Простое REST API для управления задачами на Laravel 12.
@@ -77,6 +82,7 @@ API доступно по адресу: `http://localhost`
 
 ### 4. Обновить задачу
 **PUT** `/api/tasks/{id}`
+
 Тело запроса:
 ```json
 {
