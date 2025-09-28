@@ -7,8 +7,6 @@
 
 1. Поднятие контейнеров и установка зависимостей (первый запуск):
 ```
-git clone https://github.com/aveheader/laravel-api.git
-cd laravel-api
 docker compose up -d --build
 docker compose exec php bash -c "composer setup"
 ```
